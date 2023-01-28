@@ -1,0 +1,7 @@
+aioredis
+contextvars
+discord.py
+influxdb-client[async]
+motor
+pymongo
+pyyaml

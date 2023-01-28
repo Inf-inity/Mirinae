@@ -1,0 +1,33 @@
+version: "3.9"
+
+
+services:
+  mongodb:
+    image: mongo:5.0
+    env_file: .env
+    restart: always
+    networks:
+      - mirinae
+    ports:
+      - 1998:27017
+  redis:
+    image: redis:alpine
+    restart: always
+    networks:
+      - mirinae
+    ports:
+      - 1999:6379
+  influxdb:
+    image: influxdb:latest
+    restart: always
+    env_file: .env
+    ports:
+      - 1997:8086
+    volumes:
+      - "./data/influx/var:/var/lib/influxdb2"
+      - "./data/influx/etc:/etc/influxdb2"
+    networks:
+      - mirinae
+
+networks:
+  mirinae:
