@@ -4,10 +4,7 @@ from discord import (
     Invite,
     Member,
     Message,
-    RawBulkMessageDeleteEvent,
     RawMemberRemoveEvent,
-    RawMessageDeleteEvent,
-    RawMessageUpdateEvent
 )
 from discord.utils import utcnow
 
@@ -200,20 +197,6 @@ class EventCog(Cog):
         )
 
     @Cog.listener()
-    async def on_raw_message_edit(self, payload: RawMessageUpdateEvent):
-        cache.point_cache.append(
-            Point(
-                "events"
-            ).field(
-                "on_message_edit", 1
-            ).tag(
-                "guild_id", payload.guild_id
-            ).tag(
-                "bot", str(None)
-            ).time(utcnow())
-        )
-
-    @Cog.listener()
     async def on_message_delete(self, message: Message):
         cache.point_cache.append(
             Point(
@@ -224,20 +207,6 @@ class EventCog(Cog):
                 "guild_id", message.guild.id
             ).tag(
                 "bot", str(message.author.bot)
-            ).time(utcnow())
-        )
-
-    @Cog.listener()
-    async def on_raw_message_delete(self, payload: RawMessageDeleteEvent):
-        cache.point_cache.append(
-            Point(
-                "events"
-            ).field(
-                "on_message", -1
-            ).tag(
-                "guild_id", payload.guild_id
-            ).tag(
-                "bot", str(None)
             ).time(utcnow())
         )
 
@@ -253,20 +222,5 @@ class EventCog(Cog):
                     "guild_id", messages[i].guild.id
                 ).tag(
                     "bot", str(messages[i].author.bot)
-                ).time(utcnow())
-            )
-
-    @Cog.listener()
-    async def on_raw_bulk_message_delete(self, payload: RawBulkMessageDeleteEvent):
-        for _ in range(len(payload.message_ids)):
-            cache.point_cache.append(
-                Point(
-                    "events"
-                ).field(
-                    "on_message", -1
-                ).tag(
-                    "guild_id", payload.guild_id
-                ).tag(
-                    "bot", str(None)
                 ).time(utcnow())
             )
