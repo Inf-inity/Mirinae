@@ -16,19 +16,30 @@ from .environment import (
     INFLUX_URL as IU
 )
 
-
 connect_string = f"mongodb://{MIRU}:{MIRP}@{DB_HOST}:{DB_PORT}/?authMechanism=DEFAULT"
 client = AsyncIOMotorClient(connect_string)
 db: AsyncIOMotorDatabase = client["bot_database"]
 
 
-cache = {}
+class Cache:
+    """cache class for the data-points"""
+    point_cache: list[Point] = []
+
+    def __int__(self):
+        self.point_cache = []
+
+    def reset(self):
+        self.point_cache = []
+
+
+cache = Cache()
 
 
 def influx_decorator(func):
     async def inner(*args, **kwargs):
         async with InfluxDBClientAsync(url=f"http://{IU}:{IP}", token=IAT, org=IO) as influx_client:
             return await func(influx_client, *args, **kwargs)
+
     return inner
 
 
@@ -41,9 +52,8 @@ class InfluxDB:
 
     @staticmethod
     @influx_decorator
-    async def insert_event(i_client: InfluxDBClientAsync, event_name: str, guild_id: int):
-        data_point = Point("events").field(event_name, 1).field("guild", guild_id).time(datetime.utcnow())
-        await i_client.write_api().write(bucket=IS, record=data_point)
+    async def insert_points(i_client: InfluxDBClientAsync, cached: list[Point]):
+        await i_client.write_api().write(bucket=IS, record=cached)
 
 
 class BasePost:

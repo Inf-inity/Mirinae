@@ -20,7 +20,7 @@ mirinae = Bot(
     command_prefix=",",
     case_insensitive=True,
     intents=Intents.all(),
-    help_command=None,
+    # help_command=None,
     strip_after_prefix=True,
     owner_ids=[846009958062358548]
 )
@@ -28,9 +28,8 @@ mirinae = Bot(
 
 @mirinae.event
 async def on_ready():
-
     logger.info("Loading Cogs")
-    await Cog().load_all_cogs(mirinae)
+    await Cog.load_all_cogs(mirinae)
     logger.debug("Setting startup-time")
     await InfluxDB.insert_startup()
 
