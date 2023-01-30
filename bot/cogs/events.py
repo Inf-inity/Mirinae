@@ -112,7 +112,7 @@ class EventCog(Cog):
             ).tag(
                 "guild_id", member.guild.id
             ).tag(
-                "bot", member.bot
+                "bot", str(member.bot)
             ).time(utcnow())
         )
 
@@ -126,7 +126,7 @@ class EventCog(Cog):
             ).tag(
                 "guild_id", member.guild.id
             ).tag(
-                "bot", member.bot
+                "bot", str(member.bot)
             ).time(utcnow())
         )
 
@@ -140,12 +140,12 @@ class EventCog(Cog):
             ).tag(
                 "guild_id", payload.guild_id
             ).tag(
-                "bot", payload.user.bot
+                "bot", str(payload.user.bot)
             ).time(utcnow())
         )
 
     @Cog.listener()
-    async def on_member_ban(self, guild: Guild, _: Member):
+    async def on_member_ban(self, guild: Guild, member: Member):
         cache.point_cache.append(
             Point(
                 "events"
@@ -153,11 +153,13 @@ class EventCog(Cog):
                 "on_member_ban", 1
             ).tag(
                 "guild_id", guild.id
+            ).tag(
+                "bot", str(member.bot)
             ).time(utcnow())
         )
 
     @Cog.listener()
-    async def on_member_unban(self, guild: Guild, _: Member):
+    async def on_member_unban(self, guild: Guild, member: Member):
         cache.point_cache.append(
             Point(
                 "events"
@@ -165,6 +167,8 @@ class EventCog(Cog):
                 "on_member_ban", -1
             ).tag(
                 "guild_id", guild.id
+            ).tag(
+                "bot", str(member.bot)
             ).time(utcnow())
         )
 
