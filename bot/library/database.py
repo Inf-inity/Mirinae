@@ -34,16 +34,22 @@ class Measurements(Enum):
 
 
 class Fields(Enum):
+    # --- startups fields ---
+    startup = auto()
+
+    # --- events fields ---
     on_auto_mod_action = auto()
 
     on_guild_available = auto()
     on_guild_join = auto()
+    on_guild_remove = auto()
 
     on_invite_create = auto()
 
     on_member_ban = auto()
     on_member_join = auto()
     on_member_remove = auto()
+    on_member_unban = auto()
 
     on_message = auto()
     on_message_delete = auto()
@@ -108,7 +114,7 @@ class InfluxDB:
     @staticmethod
     @influx_decorator
     async def insert_startup(i_client: InfluxDBClientAsync, /):
-        data_point = Point("startups").field("startup", 1).time(datetime.utcnow())
+        data_point = Point(Measurements.startups.name).field(Fields.startup.name, 1).time(datetime.utcnow())
         await i_client.write_api().write(bucket=IB, record=data_point)
 
     @staticmethod

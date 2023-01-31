@@ -10,7 +10,7 @@ from discord.utils import utcnow
 
 from library.cog import Cog
 from library.contributor import Contributor
-from library.database import Point, cache
+from library.database import Fields, Measurements, Point, cache
 
 
 class EventCog(Cog):
@@ -20,9 +20,9 @@ class EventCog(Cog):
     async def on_automod_action(self, execution: AutoModAction):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_automod_action", 1
+                Fields.on_auto_mod_action.name, 1
             ).tag(
                 "guild_id", execution.guild_id
             ).tag(
@@ -34,9 +34,9 @@ class EventCog(Cog):
     async def on_guild_available(self, guild: Guild):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_guild_available", 1
+                Fields.on_guild_available.name, 1
             ).tag(
                 "guild_id", guild.id
             ).time(utcnow())
@@ -46,9 +46,9 @@ class EventCog(Cog):
     async def on_guild_unavailable(self, guild: Guild):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_guild_available", -1
+                Fields.on_guild_available.name, -1
             ).tag(
                 "guild_id", guild.id
             ).time(utcnow())
@@ -58,9 +58,9 @@ class EventCog(Cog):
     async def on_guild_join(self, guild: Guild):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_guild_join", 1
+                Fields.on_guild_join.name, 1
             ).tag(
                 "guild_id", guild.id
             ).time(utcnow())
@@ -70,9 +70,9 @@ class EventCog(Cog):
     async def on_guild_remove(self, guild: Guild):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_guild_join", -1
+                Fields.on_guild_remove.name, 1
             ).tag(
                 "guild_id", guild.id
             ).time(utcnow())
@@ -82,9 +82,9 @@ class EventCog(Cog):
     async def on_invite_create(self, invite: Invite):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_invite_create", 1
+                Fields.on_invite_create.name, 1
             ).tag(
                 "guild_id", invite.guild.id
             ).time(utcnow())
@@ -94,9 +94,9 @@ class EventCog(Cog):
     async def on_invite_delete(self, invite: Invite):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_invite_create", -1
+                Fields.on_invite_create.name, -1
             ).tag(
                 "guild_id", invite.guild.id
             ).time(utcnow())
@@ -106,9 +106,9 @@ class EventCog(Cog):
     async def on_member_join(self, member: Member):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_member_join", 1
+                Fields.on_member_join.name, 1
             ).tag(
                 "guild_id", member.guild.id
             ).tag(
@@ -120,9 +120,9 @@ class EventCog(Cog):
     async def on_member_remove(self, member: Member):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_member_remove", 1
+                Fields.on_member_remove.name, 1
             ).tag(
                 "guild_id", member.guild.id
             ).tag(
@@ -134,9 +134,9 @@ class EventCog(Cog):
     async def on_raw_member_remove(self, payload: RawMemberRemoveEvent):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_member_remove", 1
+                Fields.on_member_remove.name, 1
             ).tag(
                 "guild_id", payload.guild_id
             ).tag(
@@ -148,9 +148,9 @@ class EventCog(Cog):
     async def on_member_ban(self, guild: Guild, member: Member):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_member_ban", 1
+                Fields.on_member_ban.name, 1
             ).tag(
                 "guild_id", guild.id
             ).tag(
@@ -162,9 +162,9 @@ class EventCog(Cog):
     async def on_member_unban(self, guild: Guild, member: Member):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_member_ban", -1
+                Fields.on_member_unban.name, 1
             ).tag(
                 "guild_id", guild.id
             ).tag(
@@ -176,9 +176,9 @@ class EventCog(Cog):
     async def on_message(self, message: Message):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_message", 1
+                Fields.on_message.name, 1
             ).tag(
                 "guild_id", message.guild.id
             ).tag(
@@ -190,9 +190,9 @@ class EventCog(Cog):
     async def on_message_edit(self, before: Message, _: Message):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_message_edit", 1
+                Fields.on_message_edit.name, 1
             ).tag(
                 "guild_id", before.guild.id
             ).tag(
@@ -204,9 +204,9 @@ class EventCog(Cog):
     async def on_message_delete(self, message: Message):
         cache.point_cache.append(
             Point(
-                "events"
+                Measurements.events.name
             ).field(
-                "on_message_delete", 1
+                Fields.on_message_delete.name, 1
             ).tag(
                 "guild_id", message.guild.id
             ).tag(
@@ -219,9 +219,9 @@ class EventCog(Cog):
         for i in range(len(messages)):
             cache.point_cache.append(
                 Point(
-                    "events"
+                    Measurements.events.name
                 ).field(
-                    "on_message_delete", 1
+                    Fields.on_message_delete.name, 1
                 ).tag(
                     "guild_id", messages[i].guild.id
                 ).tag(
