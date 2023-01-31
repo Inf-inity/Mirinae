@@ -26,7 +26,7 @@ REDIS_DB: int = int(getenv("REDIS_DB", 0))
 CACHE_TTL: int = int(getenv("CACHE_TTL", 300))
 
 INFLUXDB_ORG: str = getenv("DOCKER_INFLUXDB_INIT_ORG", "mirinae")
-INFLUXDB_STARTUPS: str = getenv("DOCKER_INFLUXDB_INIT_BUCKET", "mirinae")
+INFLUXDB_BUCKET: str = getenv("DOCKER_INFLUXDB_INIT_BUCKET", "mirinae")
 INFLUXDB_ADMIN_TOKEN: str = getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN", "super_secret_token")
 INFLUX_URL: str = getenv("INFLUX_URL", "0.0.0.0")
 INFLUX_PORT: int = int(getenv("INFLUX_PORT", 8086))

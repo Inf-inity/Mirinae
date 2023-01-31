@@ -18,16 +18,29 @@ class DebugCog(Cog):
     async def debug_command(self, ctx: Context):
         pass
 
-    @debug_command.group(name="cache")
+    @debug_command.group(name="cache", aliases=["c"])
     async def cache(self, ctx: Context):
         pass
 
-    @cache.command(name="print")
+    @cache.command(name="print", aliases=["p"])
     async def print_cache(self, _: Context):
         logger.debug(cache.point_cache)
 
-    @cache.command("insert")
+    @cache.command("insert", aliases=["i"])
     async def insert_cache(self, _: Context):
         logger.info("Inserting cache in Influx")
         await InfluxDB.insert_points(cached=cache.point_cache)
         cache.reset()
+
+    @debug_command.group(name="influx", aliases=["i"])
+    async def influx_command(self, _: Context):
+        pass
+
+    @influx_command.group(name="query", aliases=["q"])
+    async def query_test(self, _: Context):
+        pass
+
+    @query_test.command(name="execute", aliases=["e"])
+    async def execute_query(self, _: Context, *, query: str):
+        logger.debug(f"executing query: '{query}'")
+        res = await InfluxDB.execute_query(query)

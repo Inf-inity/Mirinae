@@ -122,7 +122,7 @@ class EventCog(Cog):
             Point(
                 "events"
             ).field(
-                "on_member_join", -1
+                "on_member_remove", 1
             ).tag(
                 "guild_id", member.guild.id
             ).tag(
@@ -136,7 +136,7 @@ class EventCog(Cog):
             Point(
                 "events"
             ).field(
-                "on_member_join", -1
+                "on_member_remove", 1
             ).tag(
                 "guild_id", payload.guild_id
             ).tag(
@@ -206,7 +206,7 @@ class EventCog(Cog):
             Point(
                 "events"
             ).field(
-                "on_message", -1
+                "on_message_delete", 1
             ).tag(
                 "guild_id", message.guild.id
             ).tag(
@@ -221,7 +221,7 @@ class EventCog(Cog):
                 Point(
                     "events"
                 ).field(
-                    "on_message", -1
+                    "on_message_delete", 1
                 ).tag(
                     "guild_id", messages[i].guild.id
                 ).tag(
